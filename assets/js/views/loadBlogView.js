@@ -1,4 +1,5 @@
-import avatarImg from "url:../../../images/avatar.jpg";
+// import avatarImg from "url:../../../images/avatar.jpg";
+const avatarImg = new URL("../../../images/avatar.jpg", import.meta.url);
 const pic01 = new URL("../../../images/pic01.jpg", import.meta.url);
 // console.log(pic01.href);
 

@@ -1,4 +1,4 @@
-import { getJSON } from "./helper";
+import { getJSON } from "./helper.js";
 import { API_KEY, API_URL } from "./config.js";
 
 export const state = {
@@ -16,7 +16,7 @@ export const loadNews = async function () {
   }));
 };
 
-export function getNewsPage(index, charToAdd = 10) {
+export function getNewsPageContent(index, charToAdd = 10) {
   // const post = state.news.findIndex(index);
   const post = state.news.at(index);
 
@@ -37,4 +37,10 @@ export function getNewsPage(index, charToAdd = 10) {
   const content = post.content.slice(start, end);
 
   return content;
+}
+
+export function getNewsPage(page){
+  const start = (page - 1) * state.totalNumPosts;
+  const end = page * state.totalNumPosts;
+  return state.news.slice(start, end);
 }

@@ -6,7 +6,8 @@ async function controlLoadNews() {
 
   try {
     await model.loadNews();
-    loadNewsView.render(model.state.news.slice(0, model.state.totalNumPosts));
+    // loadNewsView.render(model.state.news.slice(0, model.state.totalNumPosts));
+    loadNewsView.render(model.getNewsPage(1));
     if (model.state.isMorePosts) loadNewsView.renderPaginationBtn();
   } catch (error) {
     loadNewsView.renderError();
@@ -14,7 +15,7 @@ async function controlLoadNews() {
 }
 
 const controlContinueReading = function (postIndex) {
-  const content = model.getNewsPage(postIndex, 59);
+  const content = model.getNewsPageContent(postIndex, 59);
   const post = model.state.news[postIndex];
   const btn = document.querySelector(
     `.continueR[data-postindex="${postIndex}"]`
