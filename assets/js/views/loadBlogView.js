@@ -22,12 +22,8 @@ class LoadNewsView {
     this._parentElement.innerHTML = "";
     this._parentElement.insertAdjacentHTML("afterbegin", markup);
   }
-  renderPaginationBtn() {
-    const markup = this._generatePaginationBtn();
-    this._parentElement.insertAdjacentHTML("beforeend", markup);
-  }
   renderError() {
-    return "Data might not be an array";
+    return "Data might not be empty";
   }
   handleContinueReadingClick(handler) {
     this._parentElement.addEventListener("click", (e) => {
@@ -42,16 +38,6 @@ class LoadNewsView {
     });
   }
 
-  _generatePaginationBtn() {
-    // check if there are more content
-    return `
-            <ul class="actions pagination">
-                <li><a href="" class="disabled button large previous">Previous Page</a></li>
-                <li><a href="#" class="button large next">Next Page</a></li>
-            </ul>
-        `;
-  }
-
   _generateMarkup() {
     return this._data
       .map((post, index) => {
@@ -59,7 +45,7 @@ class LoadNewsView {
                 <article class="post">
                     <header>
                         <div class="title">
-                            <h2><a href="${post.url}">${post.title}</a></h2>
+                            <h2><a target="_blank" href="${post.url}">${post.title}</a></h2>
                             <p>
                                 ${
                                   post.description.length > 100
@@ -72,16 +58,14 @@ class LoadNewsView {
                             <time class="published" datetime="2015-11-01">${
                               post.publishedAt
                             }</time>
-                            <a href="#" class="author"><span class="name">${
-                              post.author
-                            }</span><img src="${avatarImg}" alt="${
+                            <a href="#" class="author"><span class="name">${post.author}</span><img src="${avatarImg}" alt="${
           post.title
         }" /></a>
                         </div>
                     </header>
-                    <a href="${post.url}" class="image featured"><img src="${
+                    <a href="${post.url}" target="_blank" class="image featured"><img data-src="${
           post.urlToImage
-        }" alt="" /></a>
+        }" src="${pic01}" alt="" /></a>
                     <p class="postcontent">${post.content.slice(
                       0,
                       post.currentContentLength

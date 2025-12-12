@@ -2,15 +2,18 @@ import { getJSON } from "./helper.js";
 import { API_KEY, API_URL } from "./config.js";
 
 export const state = {
-  totalNumPosts: 3,
   isMorePosts: false,
-  news: [],
+  news: {
+    totalNumPosts: 5,
+    page: 1,
+    data: [],
+  },
 };
 export const loadNews = async function () {
   let { articles: data } = await getJSON(`${API_URL}${API_KEY}`);
-  state.isMorePosts = data.length > state.totalNumPosts;
+  state.isMorePosts = data.length > state.news.totalNumPosts;
 
-  state.news = data.map((post) => ({
+  state.news.data = data.map((post) => ({
     ...post,
     currentContentLength: 5,
   }));
@@ -18,7 +21,7 @@ export const loadNews = async function () {
 
 export function getNewsPageContent(index, charToAdd = 10) {
   // const post = state.news.findIndex(index);
-  const post = state.news.at(index);
+  const post = state.news.data.at(index);
 
   if (!post) return null;
 
@@ -39,8 +42,11 @@ export function getNewsPageContent(index, charToAdd = 10) {
   return content;
 }
 
-export function getNewsPage(page){
-  const start = (page - 1) * state.totalNumPosts;
-  const end = page * state.totalNumPosts;
-  return state.news.slice(start, end);
+export function getNewsPage(page = state.news.page) {
+  state.news.page = page; // update current page number (global variable: important for pagination view)
+
+  const start = (page - 1) * state.news.totalNumPosts;
+  const end = page * state.news.totalNumPosts;
+
+  return state.news.data.slice(start, end);
 }
