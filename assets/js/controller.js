@@ -69,7 +69,7 @@ const controlLoadSideBarPosts = async function() {
   */
 
   try {
-    loadSideBarPosts.render(model.state.news.data.slice(-5));
+    loadSideBarPosts.render(model.state.news.data.slice(-7));
   } catch (error) {
     console.error(error);
     // alert('Error loading sidebar posts:', error);
