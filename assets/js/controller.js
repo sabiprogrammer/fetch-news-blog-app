@@ -16,6 +16,7 @@ async function controlLoadNews() {
   } catch (error) {
     loadNewsView.renderError();
   }
+
 }
 
 const controlContinueReading = function (postIndex) {
